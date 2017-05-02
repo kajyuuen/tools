@@ -1,0 +1,7 @@
+[alias]
+  che = checkout
+  bra = branch
+  stl = lfs status
+[user]
+  email = kajyuuen@gmail.com
+  name = kajyuuen

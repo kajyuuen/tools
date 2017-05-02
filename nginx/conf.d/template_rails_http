@@ -1,0 +1,57 @@
+# xxx, yyyは適宜変更
+upstream xxx {
+  server unix:/home/deploy/www/tmp/sockets/puma.sock fail_timeout=0;
+}
+
+server {
+  listen 80;
+  server_name yyy;
+  access_log /home/deploy/www/log/nginx_access.log main;
+  error_log /home/deploy/www/log/nginx_error.log warn;
+
+  charset UTF-8;
+  client_max_body_size 16M;
+  root /home/deploy/www/public;
+  index index.html;
+
+  location / {
+    try_files $uri $uri/index.html $uri.html @rails;
+  }
+
+  location = /favicon.ico {
+    log_not_found off;
+    access_log off;
+  }
+
+  location ~* /\.well-known {
+    allow all;
+  }
+
+  location ~* /\. {
+    deny all;
+  }
+
+  location ~* \.(jpg|jpeg|gif|png|css|js|swf|ico|pdf|svg|eot|ttf|woff)$ {
+    access_log off;
+  }
+
+  location @rails {
+    proxy_read_timeout      300;
+    proxy_connect_timeout   300;
+    proxy_redirect          off;
+
+    proxy_set_header    Host                $http_host;
+    proxy_set_header    X-Real-IP           $remote_addr;
+    proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+    proxy_set_header    X-Forwarded-Proto   $scheme;
+    proxy_set_header    X-Frame-Options     SAMEORIGIN;
+
+    proxy_pass http://xxx;
+  }
+
+  location ~ ^/(assets)/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+}
