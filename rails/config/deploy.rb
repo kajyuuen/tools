@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-# lock '3.8.1' 
+# lock '3.8.1'
 
 set :application, 'my_app_name'
 set :repo_url, 'git@github.com:my_name/my_app_name.git'
@@ -26,7 +26,7 @@ append :linked_files, 'config/database.yml', 'config/secrets.yml'
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
 
-set :rbenv_ruby, '2.4.1'
+# set :rbenv_ruby, '2.4.1'
 set :rbenv_path, '/usr/local/.rbenv'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 
