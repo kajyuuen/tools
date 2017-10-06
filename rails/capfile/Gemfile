@@ -1,0 +1,8 @@
+group :development do
+  # capistrano
+  gem 'capistrano'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-rails'
+  gem 'capistrano3-puma'
+  gem 'capistrano-bundler'
+end
